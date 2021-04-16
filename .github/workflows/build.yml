@@ -17,8 +17,8 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew build
       # [heroku] insert because heroku deploy requires
-      - name: heroku please
-        run: git add -A && git commit -m "Updated code" 
+#       - name: heroku please
+#         run: git add -A && git commit -m "Updated code" 
       - name: heroku deploy
         uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
         with:
