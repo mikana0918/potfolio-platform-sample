@@ -66,8 +66,8 @@ jobs:
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:
           task-definition: ${{ steps.render-container.outputs.task-definition }}
-          service: app-service
-          cluster: app-ecs-cluster
+          service: platform-sample-AppService-pLbq3mFM1606
+          cluster: platform-sample
           
           
         
