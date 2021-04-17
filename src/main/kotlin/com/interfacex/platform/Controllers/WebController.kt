@@ -9,6 +9,6 @@ import org.springframework.web.bind.annotation.RestController
 class WebController {
     @RequestMapping("/")
     fun index(): String {
-        return "Hello Docker-san!"
+        return "Hello Docker-san! Deploy Done!"
     }
 }
