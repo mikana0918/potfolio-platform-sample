@@ -13,19 +13,6 @@ jobs:
         run: chmod +x gradlew
       - name: Build with Gradle
         run: ./gradlew build
-<<<<<<< HEAD
-=======
-      # [heroku] insert because heroku deploy requires
-#       - name: heroku please
-#         run: git add -A && git commit -m "Updated code" 
-      - name: heroku deploy
-        uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
-        with:
-          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: "limitless-inlet-48288" #Must be unique in Heroku
-          heroku_email: ${{secrets.HEROKU_EMAIL}}
-          usedocker: true
->>>>>>> 087cf67a71cbd9733f432dc13ca0a15289015bec
 #  frontend build(comment out it if necessary)
 #  build_frontend:
 #    runs-on: ubuntu-latest
