@@ -1,9 +1,8 @@
 name: development build & deploy
-on: 
+on:
   push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+    branches: [master]
+
 jobs:
   build_backend:
     runs-on: ubuntu-latest
@@ -11,27 +10,24 @@ jobs:
       # Pre-build
       - name: Checkout repo
         uses: actions/checkout@v2
-        
-        
+
       # Build
       - name: Set up JDK 1.8
         uses: actions/setup-java@v1
         with:
           java-version: 1.8
-          
+
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
-        
+
       - name: Build with Gradle
         run: ./gradlew build
-        
-        
+
       # Pre-deploy
       - name: Pre-deploy flow # デプロイ前の設定
         run: |
           cp ./build/libs/*.jar ./docker/kotlin
-          
-          
+
       # Deploy
       - name: Configure AWS Credentials # AWSアクセス権限設定
         uses: aws-actions/configure-aws-credentials@v1
@@ -39,11 +35,11 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ap-northeast-1
-        
+
       - name: Login to Amazon ECR # ECRログイン処理
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
-    
+
       - name: Backend Kotlin ...Build, tag, and push image to Amazon ECR # ECRイメージPush
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
@@ -60,18 +56,16 @@ jobs:
         with:
           task-definition: aws/task-definition-app.json # レポジトリ以下のタスク定義ファイルがあるPath
           container-name: app
-          image: 184470199898.dkr.ecr.ap-northeast-1.amazonaws.com/platform-sample/docker-spring-boot-postgres:latest
+          # image: 184470199898.dkr.ecr.ap-northeast-1.amazonaws.com/platform-sample/docker-spring-boot-postgres:latest
+          image: ${{secrets.AWS_ECR_IMAGE_PATH}}
 
       - name: Deploy to Amazon ECS service # ECSサービスデプロイ
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:
           task-definition: ${{ steps.render-container.outputs.task-definition }}
-          service: platform-sample-AppService-pLbq3mFM1606
+          # service: platform-sample-AppService-pLbq3mFM1606
+          service: ${{screts.AWS_ECS_SERVICE_NAME}}
           cluster: platform-sample
-          
-          
-        
-        
 #  frontend build(comment out it if necessary)
 #  build_frontend:
 #    runs-on: ubuntu-latest
