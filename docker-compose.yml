@@ -2,7 +2,8 @@ version: "3"
 
 services:
   app:
-    image: "docker-spring-boot-postgres:latest"
+    # image: "docker-spring-boot-postgres:latest"
+    image: "${AWS_ECR_IMAGE_APP}"
     build:
       context: ./docker/kotlin
     container_name: app
@@ -17,7 +18,9 @@ services:
       - 8080:8080
 
   db:
-    image: "postgres:13.1-alpine"
+    # image: "postgres:13.1-alpine"
+    # public レジストリを公開するとやばいので、github secretsへ
+    image: "${AWS_ECR_IMAGE_DB}"
     container_name: db
     environment:
       - POSTGRES_USER=compose-postgres
