@@ -41,11 +41,15 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v1
     
       - name: Backend Kotlin ...Build, tag, and push image to Amazon ECR # ECRイメージPush
-        working-directory: ./docker/kotlin
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: ${{ secrets.AWS_ECR_REPO_NAME }}
         run: |
+          cd docker/kotlin
+          echo 'ここでpwd'
+          pwd
+          echo 'ここでls'
+          ls
           IMAGE_TAG=latest
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -f docker/kotlin/Dockerfile .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
