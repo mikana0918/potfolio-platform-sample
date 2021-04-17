@@ -64,7 +64,7 @@ jobs:
         with:
           task-definition: ${{ steps.render-container.outputs.task-definition }}
           # service: platform-sample-AppService-pLbq3mFM1606
-          service: ${{screts.AWS_ECS_SERVICE_NAME}}
+          service: ${{secrets.AWS_ECS_SERVICE_NAME}}
           cluster: platform-sample
 #  frontend build(comment out it if necessary)
 #  build_frontend:
