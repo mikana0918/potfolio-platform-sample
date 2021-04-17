@@ -54,20 +54,20 @@ jobs:
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
-#       - name: Render Amazon ECS task definition # ECSタスク定義ファイルレンダリング
-#         id: render-container
-#         uses: aws-actions/amazon-ecs-render-task-definition@v1
-#         with:
-#           task-definition: aws/task-definition.json # レポジトリ以下のタスク定義ファイルがあるPath
-#           container-name: app-container-name
-#           image: XXXXXXXXXXXX.dkr.ecr.ap-northeast-1.amazonaws.com/app:latest
+      - name: Render Amazon ECS task definition # ECSタスク定義ファイルレンダリング
+        id: render-container
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: aws/task-definition-app.json # レポジトリ以下のタスク定義ファイルがあるPath
+          container-name: app
+          image: 184470199898.dkr.ecr.ap-northeast-1.amazonaws.com/platform-sample/docker-spring-boot-postgres:latest
 
-#       - name: Deploy to Amazon ECS service # ECSサービスデプロイ
-#         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
-#         with:
-#           task-definition: ${{ steps.render-container.outputs.task-definition }}
-#           service: app-service
-#           cluster: app-ecs-cluster
+      - name: Deploy to Amazon ECS service # ECSサービスデプロイ
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        with:
+          task-definition: ${{ steps.render-container.outputs.task-definition }}
+          service: app-service
+          cluster: app-ecs-cluster
           
           
         
