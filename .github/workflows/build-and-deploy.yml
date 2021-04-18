@@ -56,16 +56,16 @@ jobs:
         with:
           task-definition: aws/task-definition-app.json # レポジトリ以下のタスク定義ファイルがあるPath
           container-name: app
-          # image: 184470199898.dkr.ecr.ap-northeast-1.amazonaws.com/platform-sample/docker-spring-boot-postgres:latest
           image: ${{secrets.AWS_ECR_IMAGE_PATH}}
 
       - name: Deploy to Amazon ECS service # ECSサービスデプロイ
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:
           task-definition: ${{ steps.render-container.outputs.task-definition }}
-          # service: platform-sample-AppService-pLbq3mFM1606
           service: ${{secrets.AWS_ECS_SERVICE_NAME}}
           cluster: platform-sample
+          
+          
 #  frontend build(comment out it if necessary)
 #  build_frontend:
 #    runs-on: ubuntu-latest
