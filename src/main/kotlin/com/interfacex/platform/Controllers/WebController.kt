@@ -1,14 +1,14 @@
 package com.interfacex.platform.Controllers
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
+import org.springframework.web.servlet.ModelAndView
 
 @SpringBootApplication
 @RestController
 class WebController {
-    @RequestMapping("/")
-    fun index(): String {
-        return "Hello Docker-san! Deploy Done!"
+    @GetMapping("/")
+    fun top(): String {
+        return "Hello Docker"
     }
 }

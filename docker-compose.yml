@@ -7,7 +7,7 @@ services:
       context: ./docker/kotlin
     container_name: app
     depends_on:
-      - db
+      - mysql
       - redis
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/compose-postgres
@@ -17,12 +17,20 @@ services:
     ports:
       - 8080:8080
 
-  db:
-    image: "postgres:13.1-alpine"
-    container_name: db
+  mysql:
+    image: mysql:8.0.20
     environment:
-      - POSTGRES_USER=compose-postgres
-      - POSTGRES_PASSWORD=compose-postgres
+      MYSQL_DATABASE: platform_sam@ple
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_TCP_PORT: 3306
+    ports:
+      - 3306:3306
+    volumes:
+      - ./docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+    container_name: mysql
+    restart: always
 
   redis:
     image: "redis:alpine"

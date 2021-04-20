@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "com.interfacex"
-version = "0.0.1-SNAPSHOT"
+version = "app-0.0.1"
 java.sourceCompatibility = JavaVersion.VERSION_11
 
 repositories {
@@ -25,7 +25,12 @@ dependencies {
 	implementation("org.springframework.session:spring-session-data-redis")
 	implementation("org.springframework.session:spring-session-jdbc")
 	implementation("org.springframework.boot:spring-boot-starter-jdbc")
-	runtimeOnly("com.h2database:h2")
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+	runtimeOnly ("mysql:mysql-connector-java")
+//	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+
+//	implementation("org.postgresql:postgresql:42.2.19")
+//	runtimeOnly("com.h2database:h2")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.springframework.security:spring-security-test")
 }
